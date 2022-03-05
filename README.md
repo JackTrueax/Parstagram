@@ -27,7 +27,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/CsHONIy.gif' title='https://i.imgur.com/CsHONIy.gif' width='' alt='https://i.imgur.com/CsHONIy.gif' />
+<img src='https://i.imgur.com/CsHONIy.gif' title='https://i.imgur.com/CsHONIy.gif' width='250' alt='https://i.imgur.com/CsHONIy.gif' />
 
 ## Notes
 
