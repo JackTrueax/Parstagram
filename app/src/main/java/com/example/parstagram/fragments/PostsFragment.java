@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class PostsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private SwipeRefreshLayout swipeContainer;
     private RecyclerView rvPosts;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
@@ -77,7 +79,30 @@ public class PostsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
+//
+//    public void fetchTimelineAsync(int page) {
+//        // Send the network request to fetch the updated data
+//        // `client` here is an instance of Android Async HTTP
+//        // getHomeTimeline is an example endpoint.
+//        client.getHomeTimeline(new JsonHttpResponseHandler() {
+//            public void onSuccess(JSONArray json) {
+//                // Remember to CLEAR OUT old items before appending in the new ones
+//                adapter.clear();
+//                // ...the data has come back, add new items to your adapter...
+//                adapter.addAll(...);
+//                // Now we call setRefreshing(false) to signal refresh has finished
+//                swipeContainer.setRefreshing(false);
+//            }
+//
+//            public void onFailure(Throwable e) {
+//                Log.d("DEBUG", "Fetch timeline error: " + e.toString());
+//            }
+//        });
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,6 +123,24 @@ public class PostsFragment extends Fragment {
 
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+//                fetchTimelineAsync(0);
+                queryPosts();
+            }
+        });
+
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         queryPosts();
     }
 
@@ -117,7 +160,14 @@ public class PostsFragment extends Fragment {
                 for (Post post : posts) {
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
+
+                // Remember to CLEAR OUT old items before appending in the new ones
+                adapter.clear();
+
                 allPosts.addAll(posts);
+                // Now we call setRefreshing(false) to signal refresh has finished
+                swipeContainer.setRefreshing(false);
+
                 adapter.notifyDataSetChanged();
                 Log.i(TAG, "after for loop");
             }
