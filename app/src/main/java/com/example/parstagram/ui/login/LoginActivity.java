@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                             return;
                         }
                         goMainActivity();
-                        Toast.makeText(getApplicationContext(), "success!", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "success!", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
